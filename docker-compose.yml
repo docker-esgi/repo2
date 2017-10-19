@@ -1,0 +1,25 @@
+version: "3.1"
+services:
+  mariadb:
+    container_name: soutenance-mariadb
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: soutenance-phpmyadmin
+    links:
+      - mariadb:db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "8080:80"
+
+  wordpress:
+    image: wordpress
+    container_name: soutenance-wordpress
+    links:
+      - mariadb:mysql
+    ports:
+      - "8081:80"
